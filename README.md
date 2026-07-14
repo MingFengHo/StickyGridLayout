@@ -14,6 +14,7 @@ A spreadsheet-style `UICollectionViewLayout` with frozen header rows and columns
 
 - **Freeze any number of rows and columns**, not just one — set `stickyRowCount` / `stickyColumnCount`.
 - **Data-driven sizing** via an optional delegate; falls back to sensible defaults.
+- **Optional self-sizing** — columns and rows grow to fit their content.
 - **Cheap scrolling** — cell frames are built once and only the frozen cells are re-pinned on scroll, instead of recomputing the whole grid every frame.
 - **UIKit-free geometry core** (`GridGeometry`) that is unit-tested independently of any running collection view.
 - **No dependencies.** SPM, CocoaPods, and Carthage.
@@ -76,6 +77,37 @@ extension MyViewController: StickyGridLayoutDelegate {
 
 Without a delegate, every cell uses `layout.defaultColumnWidth` (100) and
 `layout.defaultRowHeight` (44).
+
+### Self-sizing columns and rows
+
+Set `isSelfSizing` to let each column widen and each row grow to fit its content
+(measured through Auto Layout), instead of specifying sizes yourself:
+
+```swift
+layout.isSelfSizing = true
+layout.estimatedColumnWidth = 90   // starting width; columns only grow
+layout.estimatedRowHeight = 44
+```
+
+Your cell must be self-sizing — its content needs Auto Layout constraints that
+define both width and height (e.g. a label pinned to all four edges of
+`contentView`), and it should report its content width by overriding
+`preferredLayoutAttributesFitting`:
+
+```swift
+override func preferredLayoutAttributesFitting(
+    _ layoutAttributes: UICollectionViewLayoutAttributes
+) -> UICollectionViewLayoutAttributes {
+    let attributes = super.preferredLayoutAttributesFitting(layoutAttributes)
+    attributes.frame.size = contentView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
+    return attributes
+}
+```
+
+Each column takes the width of its widest cell and each row the height of its
+tallest. Sizes are measured as cells appear and only ever grow, so a realistic
+`estimated…` value keeps the grid stable while scrolling. See [`Example/`](Example)
+for a self-sizing data table.
 
 ## How it works
 

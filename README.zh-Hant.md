@@ -14,6 +14,7 @@
 
 - **可凍結任意數量的列與欄**，不限於一列一欄 —— 用 `stickyRowCount` / `stickyColumnCount` 設定。
 - **資料驅動的尺寸**，透過選用的 delegate 提供；未實作時採用預設值。
+- **選用的自適應大小** —— 欄與列會自動撐大以容納內容。
 - **捲動成本低** —— 儲存格框架只在資料變動時建立一次，捲動時只重新定位被凍結的儲存格，而非每一幀重算整個表格。
 - **不依賴 UIKit 的幾何核心**（`GridGeometry`），可獨立於執行中的 collection view 進行單元測試。
 - **零相依**。支援 SPM、CocoaPods、Carthage。
@@ -76,6 +77,35 @@ extension MyViewController: StickyGridLayoutDelegate {
 
 未設定 delegate 時，每個儲存格採用 `layout.defaultColumnWidth`（100）與
 `layout.defaultRowHeight`（44）。
+
+### 自適應欄寬與列高
+
+設定 `isSelfSizing`，即可讓每一欄依內容撐寬、每一列依內容撐高（透過 Auto Layout
+量測），不必自己指定尺寸：
+
+```swift
+layout.isSelfSizing = true
+layout.estimatedColumnWidth = 90   // 起始寬度；欄只會變寬不會變窄
+layout.estimatedRowHeight = 44
+```
+
+你的 cell 必須能自撐 —— 內容需要有能同時定義寬與高的 Auto Layout 約束（例如把
+label 貼齊 `contentView` 的四個邊），並覆寫 `preferredLayoutAttributesFitting`
+以回報內容寬度：
+
+```swift
+override func preferredLayoutAttributesFitting(
+    _ layoutAttributes: UICollectionViewLayoutAttributes
+) -> UICollectionViewLayoutAttributes {
+    let attributes = super.preferredLayoutAttributesFitting(layoutAttributes)
+    attributes.frame.size = contentView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
+    return attributes
+}
+```
+
+每一欄取其最寬儲存格的寬度、每一列取其最高儲存格的高度。尺寸是在儲存格出現時
+量測、且只增不減，因此給一個接近實際的 `estimated…` 值能讓捲動時的版面更穩定。
+自適應資料表範例見 [`Example/`](Example)。
 
 ## 運作原理
 
