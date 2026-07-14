@@ -1,0 +1,27 @@
+name: StickyGridLayoutDemo
+options:
+  bundleIdPrefix: com.mingfengho
+  deploymentTarget:
+    iOS: "13.0"
+  createIntermediateGroups: true
+packages:
+  StickyGridLayout:
+    path: ..
+targets:
+  StickyGridLayoutDemo:
+    type: application
+    platform: iOS
+    sources:
+      - Sources
+    dependencies:
+      - package: StickyGridLayout
+        product: StickyGridLayout
+    info:
+      path: Info.plist
+      properties:
+        CFBundleDisplayName: StickyGrid
+        UILaunchScreen: {}
+        UISupportedInterfaceOrientations:
+          - UIInterfaceOrientationPortrait
+          - UIInterfaceOrientationLandscapeLeft
+          - UIInterfaceOrientationLandscapeRight
