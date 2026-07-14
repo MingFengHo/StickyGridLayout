@@ -15,13 +15,14 @@
 - **可凍結任意數量的列與欄**，不限於一列一欄 —— 用 `stickyRowCount` / `stickyColumnCount` 設定。
 - **資料驅動的尺寸**，透過選用的 delegate 提供；未實作時採用預設值。
 - **選用的自適應大小** —— 欄與列會自動撐大以容納內容。
+- **UIKit 與 SwiftUI 皆可** —— 直接用 layout，或用 `StickyGrid` SwiftUI view（iOS 16+）。
 - **捲動成本低** —— 儲存格框架只在資料變動時建立一次，捲動時只重新定位被凍結的儲存格，而非每一幀重算整個表格。
 - **不依賴 UIKit 的幾何核心**（`GridGeometry`），可獨立於執行中的 collection view 進行單元測試。
 - **零相依**。支援 SPM、CocoaPods、Carthage。
 
 ## 系統需求
 
-- iOS 12.0+ / tvOS 12.0+
+- iOS 12.0+ / tvOS 12.0+（UIKit）· `StickyGrid` SwiftUI view 需 iOS 16.0+
 - Swift 5.7+
 
 ## 安裝
@@ -106,6 +107,23 @@ override func preferredLayoutAttributesFitting(
 每一欄取其最寬儲存格的寬度、每一列取其最高儲存格的高度。尺寸是在儲存格出現時
 量測、且只增不減，因此給一個接近實際的 `estimated…` 值能讓捲動時的版面更穩定。
 自適應資料表範例見 [`Example/`](Example)。
+
+## SwiftUI
+
+`StickyGrid` 把 layout 橋接到 SwiftUI。以索引定位每個儲存格並回傳一個 view；
+欄與列預設會依內容自適應。需要 **iOS 16**（UIKit layout 本身仍支援 iOS 12）。
+
+```swift
+import StickyGridLayout
+
+StickyGrid(rows: cities.count + 1, columns: 5,
+           stickyRows: 1, stickyColumns: 1) { row, column in
+    Text(value(row, column))
+        .padding(.horizontal, 14).padding(.vertical, 12)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(background(row, column))
+}
+```
 
 ## 運作原理
 

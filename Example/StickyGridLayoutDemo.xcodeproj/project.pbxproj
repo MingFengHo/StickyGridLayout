@@ -8,12 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		0A0DC0819AAED728A0A51E7A /* StickyGridLayout in Frameworks */ = {isa = PBXBuildFile; productRef = 406960F081782E0E6F9CC3BE /* StickyGridLayout */; };
+		658C6D139B9BEF2C004509F2 /* CitiesGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23320666231076ADEE08180A /* CitiesGridView.swift */; };
 		670E124521592978122F7D88 /* GridCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5B528E28830F915063A610 /* GridCell.swift */; };
 		DA17C14BDA05A8FA4D03C9E0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C970F3E0073FD1F6A2CCC0 /* AppDelegate.swift */; };
 		DFED13189FC46565CE77185A /* DemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 981BE3B80A13F81957A9B0A5 /* DemoViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		23320666231076ADEE08180A /* CitiesGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CitiesGridView.swift; sourceTree = "<group>"; };
 		7279EC8C939D593E146970B8 /* StickyGridLayout */ = {isa = PBXFileReference; lastKnownFileType = folder; name = StickyGridLayout; path = ..; sourceTree = SOURCE_ROOT; };
 		981BE3B80A13F81957A9B0A5 /* DemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoViewController.swift; sourceTree = "<group>"; };
 		99E6303E6B6AB465A4D71A08 /* StickyGridLayoutDemo.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = StickyGridLayoutDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -62,6 +64,7 @@
 			isa = PBXGroup;
 			children = (
 				B7C970F3E0073FD1F6A2CCC0 /* AppDelegate.swift */,
+				23320666231076ADEE08180A /* CitiesGridView.swift */,
 				981BE3B80A13F81957A9B0A5 /* DemoViewController.swift */,
 				DF5B528E28830F915063A610 /* GridCell.swift */,
 			);
@@ -129,6 +132,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DA17C14BDA05A8FA4D03C9E0 /* AppDelegate.swift in Sources */,
+				658C6D139B9BEF2C004509F2 /* CitiesGridView.swift in Sources */,
 				DFED13189FC46565CE77185A /* DemoViewController.swift in Sources */,
 				670E124521592978122F7D88 /* GridCell.swift in Sources */,
 			);

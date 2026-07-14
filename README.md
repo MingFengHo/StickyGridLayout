@@ -15,13 +15,14 @@ A spreadsheet-style `UICollectionViewLayout` with frozen header rows and columns
 - **Freeze any number of rows and columns**, not just one — set `stickyRowCount` / `stickyColumnCount`.
 - **Data-driven sizing** via an optional delegate; falls back to sensible defaults.
 - **Optional self-sizing** — columns and rows grow to fit their content.
+- **UIKit and SwiftUI** — use the layout directly, or the `StickyGrid` SwiftUI view (iOS 16+).
 - **Cheap scrolling** — cell frames are built once and only the frozen cells are re-pinned on scroll, instead of recomputing the whole grid every frame.
 - **UIKit-free geometry core** (`GridGeometry`) that is unit-tested independently of any running collection view.
 - **No dependencies.** SPM, CocoaPods, and Carthage.
 
 ## Requirements
 
-- iOS 12.0+ / tvOS 12.0+
+- iOS 12.0+ / tvOS 12.0+ (UIKit) · iOS 16.0+ for the `StickyGrid` SwiftUI view
 - Swift 5.7+
 
 ## Installation
@@ -108,6 +109,24 @@ Each column takes the width of its widest cell and each row the height of its
 tallest. Sizes are measured as cells appear and only ever grow, so a realistic
 `estimated…` value keeps the grid stable while scrolling. See [`Example/`](Example)
 for a self-sizing data table.
+
+## SwiftUI
+
+`StickyGrid` bridges the layout into SwiftUI. Address cells by index and return
+a view for each; columns and rows self-size to their content by default.
+Requires **iOS 16** (the UIKit layout itself still supports iOS 12).
+
+```swift
+import StickyGridLayout
+
+StickyGrid(rows: cities.count + 1, columns: 5,
+           stickyRows: 1, stickyColumns: 1) { row, column in
+    Text(value(row, column))
+        .padding(.horizontal, 14).padding(.vertical, 12)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(background(row, column))
+}
+```
 
 ## How it works
 

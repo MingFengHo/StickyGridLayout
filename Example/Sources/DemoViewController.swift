@@ -1,4 +1,5 @@
 import UIKit
+import SwiftUI
 import StickyGridLayout
 
 /// A world-cities data table. Column widths and row heights are **self-sizing**:
@@ -54,6 +55,10 @@ final class DemoViewController: UIViewController {
         super.viewDidLoad()
         title = "StickyGridLayout"
         view.backgroundColor = .systemBackground
+        if #available(iOS 16.0, *) {
+            navigationItem.rightBarButtonItem = UIBarButtonItem(
+                title: "SwiftUI", style: .plain, target: self, action: #selector(showSwiftUIDemo))
+        }
         view.addSubview(collectionView)
         NSLayoutConstraint.activate([
             collectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
@@ -61,6 +66,13 @@ final class DemoViewController: UIViewController {
             collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
         ])
+    }
+
+    @available(iOS 16.0, *)
+    @objc private func showSwiftUIDemo() {
+        let host = UIHostingController(rootView: CitiesGridView())
+        host.title = "StickyGrid (SwiftUI)"
+        navigationController?.pushViewController(host, animated: true)
     }
 
     private func text(row: Int, column: Int) -> String {
