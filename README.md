@@ -1,10 +1,12 @@
 # StickyGridLayout
 
+**English** · [繁體中文](README.zh-Hant.md)
+
 A spreadsheet-style `UICollectionViewLayout` with frozen header rows and columns — like *freeze panes* in a spreadsheet. Any number of leading rows and columns stay pinned while the body scrolls freely in both directions.
 
-| Initial | Scrolled — headers stay frozen |
-|---|---|
-| ![initial](docs/demo-initial.png) | ![scrolled](docs/demo-scrolled.png) |
+<p align="center">
+  <img src="docs/demo.gif" alt="StickyGridLayout demo" width="320">
+</p>
 
 *The top row and left column stay pinned while the body scrolls in both directions. See [`Example/`](Example) for the full demo app.*
 
